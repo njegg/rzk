@@ -1,0 +1,22 @@
+@charset "UTF-8";
+
+body, nav, form {
+	display: flex;
+	flex-direction: column;
+	align-content: center;
+	align-items: center;
+}
+
+form {
+	border: 1px solid gray;
+	padding: 10px;
+}
+
+body * {
+	margin: 5px;
+}
+
+nav {
+	border-bottom: 1px solid gray;
+	width: 300px;
+}

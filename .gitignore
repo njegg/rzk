@@ -1,6 +1,6 @@
 *.zip
+*.gz
 *.class
 
-RemoteSystemsTempFiles/
 .metadata/
 data/
