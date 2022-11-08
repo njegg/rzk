@@ -64,6 +64,9 @@ public class AddEventServlet extends HttpServlet {
 			Forwarder.forward(request, response, "/error.jsp");
 		}
 
+		String fromDateParam = request.getParameter("fromDate");
+		String toDateParam = request.getParameter("toDate");
+		
 		int eventTypeId = Integer.parseInt(request.getParameter("eventTypeId"));
 		String description = request.getParameter("description");
 		
@@ -71,8 +74,8 @@ public class AddEventServlet extends HttpServlet {
 		Date fromDate = null; 
 		Date toDate = null; 
 		try {
-			fromDate = simpleDateFormat.parse(request.getParameter("fromDate"));
-			toDate = simpleDateFormat.parse(request.getParameter("toDate"));
+			fromDate = simpleDateFormat.parse(fromDateParam);
+			toDate = simpleDateFormat.parse(toDateParam);
 		} catch (ParseException e) {
 			request.setAttribute("msg", "Error while processing the date");
 			Forwarder.forward(request, response, "/error.jsp");

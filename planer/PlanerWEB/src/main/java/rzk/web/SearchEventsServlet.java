@@ -86,6 +86,25 @@ public class SearchEventsServlet extends HttpServlet {
 			Forwarder.forward(request, response, "/error.jsp");
 		}
 		
+		// Za postavljanje datuma u formi na trenutno vreme
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");		
+        Date today = Calendar.getInstance().getTime();
+        request.setAttribute("today", df.format(today));
+		
+		Forwarder.forward(request, response, "/search-events.jsp");
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		PlannerBeanRemote plannerBean = (PlannerBeanRemote) request.getSession().getAttribute("sessionBean");
+
+		if (plannerBean == null) {
+			request.setAttribute("msg", "You must be loged in to do that!");
+			Forwarder.forward(request, response, "/error.jsp");
+		}
+		
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date searchDate = null; 
 		
@@ -99,14 +118,6 @@ public class SearchEventsServlet extends HttpServlet {
 		List<Event> searchResult = plannerBean.searchEvents(searchDate);
 		request.setAttribute("searchResult", searchResult);
 		Forwarder.forward(request, response, "/search-events.jsp");
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
 	}
 
 }

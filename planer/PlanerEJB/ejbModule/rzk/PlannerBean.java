@@ -104,10 +104,15 @@ public class PlannerBean implements PlannerBeanRemote {
 			.atZone(zoneId).toInstant();
 		
 	    // Eventi koji pocinju na prosledjen datum
-	    String query = "SELECT e FROM Event e WHERE e.toDate >= :startOfDay AND e.fromDate <= :endOfDay ";
+	    String query = 
+	    		"SELECT e FROM Event e "
+	    	  + "WHERE e.fromDate between :startOfDay AND :endOfDay "
+	    	  + "AND e.user LIKE :user";
+	    
 	    return em.createQuery(query)
 	    	.setParameter("startOfDay", Date.from(startOfDayInstant))
 	    	.setParameter("endOfDay", Date.from(endOfDayInstant))
+	    	.setParameter("user", user)
 	    	.getResultList();
 	}
 

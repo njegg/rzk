@@ -75,7 +75,7 @@ public class RegisterServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ass ").append(request.getContextPath());
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
@@ -90,7 +90,6 @@ public class RegisterServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		
 		String redirectPath = registerBean.createAccount(firstName, lastName, email, password) ? "/index.jsp" : "/error.jsp";
-		request.getServletContext().getRequestDispatcher(redirectPath).forward(request, response);
+		Forwarder.forward(request, response, redirectPath);
 	}
-
 }

@@ -11,9 +11,8 @@
 <body>
 <nav>
 	<a href="/PlanerWEB/">Home</a>
-	<a href="/PlanerWEB/search-events.jsp">Search Events</a>
+	<a href="/PlanerWEB/SearchEventsServlet">Search Events</a>
 </nav>
-	${today }
 	<form action="/PlanerWEB/AddEventServlet" method="post">
 			description: <textarea  name="description" id="description" cols="25" ></textarea>
 			start: <input type="datetime-local" name="fromDate" id="fromDate" value="${today }">
