@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+        
+    <wb-module deploy-name="OglasiEAR">
+                
+        <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
+                
+        <dependent-module archiveName="OglasiJPA.jar" deploy-path="/lib" handle="module:/resource/OglasiJPA/OglasiJPA">
+                        
+            <dependency-type>uses</dependency-type>
+                    
+        </dependent-module>
+                
+        <dependent-module archiveName="OglasiEJB.jar" deploy-path="/" handle="module:/resource/OglasiEJB/OglasiEJB">
+                        
+            <dependent-object/>
+                        
+            <dependency-type>uses</dependency-type>
+                    
+        </dependent-module>
+        <dependent-module archiveName="OglasiWEB.war" deploy-path="/" handle="module:/resource/OglasiWEB/OglasiWEB">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+            
+    </wb-module>
+    
+</project-modules>

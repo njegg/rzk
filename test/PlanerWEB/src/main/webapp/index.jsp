@@ -18,7 +18,7 @@
 		<c:if test="${not empty email }">
 		 	<a href="/PlanerWEB/LogoutServlet">Logout</a>
 		</c:if>
-		<a href="/PlanerWEB/SearchEventsServlet">Search Events</a>
+		<a href="/PlanerWEB/search-events.jsp">Search Events</a>
 		<a href="/PlanerWEB/AddEventServlet">Add event</a>
 	</nav>
 	

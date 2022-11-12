@@ -1,0 +1,48 @@
+@charset "UTF-8";
+
+body, nav, form {
+	display: flex;
+	flex-direction: column;
+	align-content: center;
+	align-items: center;
+}
+
+form {
+	border: 1px solid gray;
+	padding-top: 15px;
+}
+
+body * {
+	margin: 5px;
+}
+
+textarea {
+	width: 90%;
+	height: 100px;
+}
+
+nav {
+	border-bottom: 1px solid gray;
+}
+
+nav, .oglas-item, form {
+	width: 300px;
+	padding: 10px;
+}
+
+.oglas-item {
+	text-decoration: none;
+	border: 1px solid gray;
+  	color: black;
+	padding: 5px 10px;
+}
+
+.oglas-item * {
+	margin: 0;
+	display: block;
+}
+
+.oglas-text {
+	border-top: 1px solid gray;	
+	margin-top: 10px;
+}

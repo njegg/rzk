@@ -1,7 +1,5 @@
 package rzk;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -43,15 +41,5 @@ public class AccountBean implements AccountBeanRemote {
 		em.persist(newUser);
 		
 		return true;
-	}
-	
-	@PreDestroy
-	public void preDestroy() {
-		System.out.println(this.getClass().getSimpleName() + ": Is gonna be destroyed");
-	}
-	
-	@PostConstruct
-	public void postConstruct() {
-		System.out.println(this.getClass().getSimpleName() + ": Created");
 	}
 }
