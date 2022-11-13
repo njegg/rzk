@@ -34,7 +34,7 @@ public class AddOglasServlet extends HttpServlet {
 			Forwarder.forward(request, response, "/error.jsp");
 			return;
 		}
-
+		
 		Forwarder.forward(request, response, "/add-oglas.jsp");
 	}
 
@@ -50,13 +50,13 @@ public class AddOglasServlet extends HttpServlet {
 			return;
 		}
 		
-		if (!oglasiBean.dodajOglas(request.getParameter("text"))) {
+		if (!oglasiBean.addOglas(request.getParameter("text"))) {
 			request.setAttribute("msg", "Something went wrong");
 			Forwarder.forward(request, response, "/error.jsp");
 			return;
 		}
 		
-		response.sendRedirect("/OglasiWEB/");
+		response.sendRedirect("/OglasiWEB/SearchOglasiServlet");
 	}
 
 }

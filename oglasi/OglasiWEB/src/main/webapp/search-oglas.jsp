@@ -21,7 +21,7 @@
 		Pretraga
 		<input type="text" name="text">
 		<button type="submit">Pretrazi</button>
-		<button onclick="window.location.href='/OglasiWEB/SearchOglasiServlet?all=true'">Prikazi sve</button>
+		<button onclick="window.location.href='/OglasiWEB/SearchOglasiServlet?all=true&text='">Prikazi sve</button>
 	</form>
 	
 	<c:if test="${not empty msg}">

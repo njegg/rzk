@@ -32,8 +32,8 @@ public class OglasiBean implements OglasiBeanRemote {
 	private EntityManager em;
 	
 	private OglasKorisnik loggedUser;
-		
-    /**
+
+	/**
      * Default constructor. 
      */
     public OglasiBean() {
@@ -58,7 +58,7 @@ public class OglasiBean implements OglasiBeanRemote {
 	}
 
 	@Override
-	public boolean dodajOglas(String text) {
+	public boolean addOglas(String text) {
 		if (loggedUser == null) return false;
 		
 		Ogla ogla = new Ogla();
@@ -73,7 +73,7 @@ public class OglasiBean implements OglasiBeanRemote {
 
 	@Override
 	@Interceptors(PreglediInterceptor.class)
-	public List<Ogla> pretraziOglase(String text) {
+	public List<Ogla> searchOglas(String text) {
 		String query = 
 				"select o from Ogla o "
 			  + "where o.text like :text "
@@ -81,13 +81,11 @@ public class OglasiBean implements OglasiBeanRemote {
 		
 		List<Ogla> oglasi = em.createQuery(query, Ogla.class)
 				.setParameter("text", '%' + text + '%')
-//				.setParameter("username", '%' + text + '%')
 				.getResultList();
 		
 		int userID = loggedUser.getIdKorisnik();
 		
 		// Oglasi logovanog usera na vrhu
-		// Ako su razliciti bice 1, veliko -> dno liste, ako su isti bice -1, malo -> vrh liste
 		oglasi.sort((a, b) ->
 			a.getOglasKorisnik().getIdKorisnik() - userID == 0 ? -1 : 1
 		);
@@ -96,7 +94,8 @@ public class OglasiBean implements OglasiBeanRemote {
 	}
 	
 	@Override
-	public OglasPrijava prijavaNaOglas(int oglasID, String text) {
+	@Interceptors(OglasPrijavaInterceptor.class)
+	public OglasPrijava applyToOglas(int oglasID, String text) {
 		if (loggedUser == null) return null;
 
 		Ogla oglas = em.find(Ogla.class, oglasID);
@@ -112,6 +111,7 @@ public class OglasiBean implements OglasiBeanRemote {
 		
 		return oglasPrijava;
 	}
+
 
 	public OglasKorisnik getLoggedUser() {
 		return loggedUser;

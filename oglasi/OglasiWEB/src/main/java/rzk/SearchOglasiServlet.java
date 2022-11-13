@@ -41,7 +41,7 @@ public class SearchOglasiServlet extends HttpServlet {
 		String text = request.getParameter("all") != null ?
 				"" : request.getParameter("text");
 		
-		request.setAttribute("oglasi", oglasiBean.pretraziOglase(text));
+		request.setAttribute("oglasi", oglasiBean.searchOglas(text));
 		
 		Forwarder.forward(request, response, "/search-oglas.jsp");
 	}

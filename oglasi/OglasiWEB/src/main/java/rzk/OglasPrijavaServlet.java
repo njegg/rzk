@@ -74,7 +74,7 @@ public class OglasPrijavaServlet extends HttpServlet {
 		int oglasID = Integer.parseInt(request.getParameter("oglasID"));
 		String text = request.getParameter("text");
 		
-		OglasPrijava oglasPrijava =  oglasiBean.prijavaNaOglas(oglasID, text);
+		OglasPrijava oglasPrijava =  oglasiBean.applyToOglas(oglasID, text);
 		
 		if (oglasPrijava == null) {
 			request.setAttribute("msg", "Doslo je do greske");

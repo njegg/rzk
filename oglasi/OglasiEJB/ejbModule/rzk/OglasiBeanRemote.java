@@ -10,9 +10,9 @@ import model.OglasPrijava;
 @Remote
 public interface OglasiBeanRemote {
 	int login(String username, String password);
-	boolean dodajOglas(String text);
-	List<Ogla> pretraziOglase(String text);
-	OglasPrijava prijavaNaOglas(int oglasID, String text);
+	List<Ogla> searchOglas(String text);
+	boolean addOglas(String text);
+	OglasPrijava applyToOglas(int oglasID, String text);
 
 	void remove();
 }

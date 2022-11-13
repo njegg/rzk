@@ -26,16 +26,14 @@ import model.Ogla;
 @Startup
 @LocalBean
 public class Statistika implements StatistikaLocal {
-	private HashMap<Integer, Integer> pregledi;
-
 	@PersistenceContext
 	private EntityManager em;
-	
-	private int dailyViews = 0;
-	
+
 	@Resource
 	private TimerService timerService;
-	private Timer timer;
+	
+	private HashMap<Integer, Integer> pregledi;
+	private int dailyApplications = 0;
 	
 	/**
 	 * Default constructor.
@@ -43,51 +41,57 @@ public class Statistika implements StatistikaLocal {
 	public Statistika() {
 		pregledi = new HashMap<Integer, Integer>();
 	}
-	
-	public void startTimer() {
-		TimerConfig config = new TimerConfig();
-		config.setPersistent(false);
-		
-		timer = timerService.createIntervalTimer(0, 5_000, config); // 10s - za testiranje
-//		timer = timerService.createIntervalTimer(0, 24 * 3600 * 1000, config); // jednom dnevno
 
-		System.out.println("Timer started");
-	}
 	
-	@Timeout
-	private void updateDana(Timer timer) {
-		System.out.println("Daily views: " + dailyViews);
-		dailyViews = 0;
-	}
-
-	// 1. metoda za update Mape
 	public void updateMap(Ogla o) {
 		if (pregledi.containsKey(o.getIdOglas())) {
 			pregledi.put(o.getIdOglas(), pregledi.get(o.getIdOglas()) + 1);
 		} else {
 			pregledi.put(o.getIdOglas(), 1);
 		}
-		
-		dailyViews++;
 	}
 
-	// 2. metoda za update baze
 //	@Schedule(minute = "*/15", hour = "*", persistent = false)
-	@Schedule(second = "*/10", minute = "*", hour = "*", persistent = false)
+	@Schedule(second = "*/5", minute = "*", hour = "*", persistent = false) // Za test
 	public void updateDB() {
 		for (Entry<Integer, Integer> entry : pregledi.entrySet()) {
-			Ogla o = em.find(Ogla.class, entry.getKey());
-			o.setBrojPregleda(o.getBrojPregleda() + entry.getValue());
-			em.merge(o);
+			em.createQuery("update Ogla set brojPregleda = brojPregleda + :pregleda where idOglas like :id ")
+				.setParameter("pregleda", entry.getValue())
+				.setParameter("id", entry.getKey())
+				.executeUpdate();
 		}
+		
+		pregledi.clear(); // Da se ne dodaju opet
 		
 		System.out.println("Database updated");
 	}
 	
+
+	public void increaseDailyApplications() {
+		dailyApplications++;
+	}
+	
+	@Timeout
+	private void dailyUpdate(Timer timer) {
+		System.out.println("Daily applications: " + dailyApplications);
+		dailyApplications = 0;
+	}
+    
+	public void startTimer() {
+		TimerConfig config = new TimerConfig();
+		config.setPersistent(false);
+		
+		timerService.createIntervalTimer(0, 15_000, config); // 15s - za testiranje
+//		timerService.createIntervalTimer(0, 24 * 3600 * 1000, config); // jednom dnevno
+
+		System.out.println("Timer started");
+	}
+	
+	
 	@PostConstruct
 	private void postConstruct() {
 		System.out.println(getClass().getSimpleName() + ": Created");
-		
+	
 		System.out.println("About to start the timer");
 		startTimer();
 	}
