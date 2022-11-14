@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Singleton;
-import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -34,7 +33,6 @@ public class GetOglasiBean implements GetOglasiBeanRemote {
 	}
 
 	@Override
-	@Interceptors(GetOglasInterceptor.class)
 	public Ogla getOglas(int idOglas) {
 		return em.find(Ogla.class, idOglas);
 	}

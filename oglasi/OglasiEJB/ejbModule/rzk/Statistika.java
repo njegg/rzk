@@ -81,7 +81,7 @@ public class Statistika implements StatistikaLocal {
 		TimerConfig config = new TimerConfig();
 		config.setPersistent(false);
 		
-		timerService.createIntervalTimer(0, 15_000, config); // 15s - za testiranje
+		timerService.createIntervalTimer(0, 10_000, config); // za testiranje
 //		timerService.createIntervalTimer(0, 24 * 3600 * 1000, config); // jednom dnevno
 
 		System.out.println("Timer started");
